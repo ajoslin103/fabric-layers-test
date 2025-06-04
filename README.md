@@ -1,6 +1,6 @@
-# test-fabric-layers-react
+# fabric-layers-test
 
-This project is designed to test the compatibility of the `fabric-layers-react` library with React 19.1.0 and fabric-pure-browser 5.1.0.
+This project is designed to test the compatibility of the `fabric-layers` library with fabric-pure-browser 5.1.0.
 
 ## Setup
 
@@ -39,7 +39,7 @@ npm run test:browser
 Or manually open the file in your browser.
 
 The test page will display:
-- Version information for fabric-pure-browser and fabric-layers-react
+- Version information for fabric-pure-browser
 - Status messages indicating whether the libraries loaded successfully
 - Results of attempting to create a CoordinatePlane and Layer
 
@@ -51,7 +51,6 @@ The test page will display:
 
 ## Dependencies
 
-- React 19.1.0
 - fabric-pure-browser 5.1.0
-- fabric-layers-react 2.0.0
+- fabric-layers1.0.0
 - eventemitter2 6.4.9

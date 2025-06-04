@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>fabric-layers-react v2.0.0 with fabric-pure-browser 5.1.0 Test</title>
+  <title>fabric-layers v1.0.0 with fabric-pure-browser 5.1.0 Test</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -46,8 +46,8 @@
   </style>
 </head>
 <body>
-  <h1>fabric-layers-react v2.0.0 with fabric-pure-browser 5.1.0 Test</h1>
-  <p>This page verifies that the fabric-layers-react library works with fabric-pure-browser 5.1.0.</p>
+  <h1>fabric-layer v2.0.0 with fabric-pure-browser 5.1.0 Test</h1>
+  <p>This page verifies that the fabric-layers library works with fabric-pure-browser 5.1.0.</p>
   
   <div id="status-container"></div>
   <div id="canvas-container"></div>
@@ -57,7 +57,7 @@
   <script src="./node_modules/eventemitter2/lib/eventemitter2.js"></script>
   
   <!-- Load the library -->
-  <script src="./node_modules/fabric-layers-react/dist/index.umd.js"></script>
+  <script src="./node_modules/fabric-layers/dist/index.umd.js"></script>
   
   <script>
     // Display status messages
@@ -98,15 +98,15 @@
       addVersionRow('fabric-pure-browser', 'Unknown', '❌ Not loaded');
     }
     
-    // Check if fabric-layers-react is loaded
-    if (typeof FabricLayersReact !== 'undefined') {
-      // Display fabric-layers-react version
-      if (FabricLayersReact.version) {
-        addVersionRow('fabric-layers-react', FabricLayersReact.version, '✅ Loaded');
-        addStatus(`Successfully loaded fabric-layers-react v${FabricLayersReact.version}`);
+    // Check if fabric-layers is loaded
+    if (typeof FabricLayers !== 'undefined') {
+      // Display fabric-layers version
+      if (FabricLayers.version) {
+        addVersionRow('fabric-layers', FabricLayers.version, '✅ Loaded');
+        addStatus(`Successfully loaded fabric-layers v${FabricLayers.version}`);
       } else {
-        addVersionRow('fabric-layers-react', '2.0.0 (from package.json)', '✅ Loaded, version from package.json');
-        addStatus('Successfully loaded fabric-layers-react, version from package.json');
+        addVersionRow('fabric-layers', '1.0.0 (from package.json)', '✅ Loaded, version from package.json');
+        addStatus('Successfully loaded fabric-layers, version from package.json');
       }
       
       // Test CoordinatePlane and Layer functionality
@@ -114,7 +114,7 @@
         const container = document.getElementById('canvas-container');
         
         // Create a coordinate plane
-        const plane = new FabricLayersReact.CoordinatePlane(container, {
+        const plane = new FabricLayers.CoordinatePlane(container, {
           gridEnabled: true,
           zoomEnabled: true,
           selectEnabled: true
@@ -125,7 +125,7 @@
         
         // Try to add a layer to test functionality
         try {
-          const layer = new FabricLayersReact.Layer({
+          const layer = new FabricLayers.Layer({
             name: 'Test Layer',
             coordinatePlane: plane
           });
@@ -136,12 +136,12 @@
           addStatus(`Error adding layer: ${layerError.message}`, true);
         }
       } catch (error) {
-        console.error('Error initializing fabric-layers-react:', error);
-        addStatus(`Error initializing fabric-layers-react: ${error.message}`, true);
+        console.error('Error initializing fabric-layers:', error);
+        addStatus(`Error initializing fabric-layers: ${error.message}`, true);
       }
     } else {
-      addVersionRow('fabric-layers-react', 'Unknown', '❌ Not loaded');
-      addStatus('Failed to load fabric-layers-react', true);
+      addVersionRow('fabric-layers', 'Unknown', '❌ Not loaded');
+      addStatus('Failed to load fabric-layers', true);
     }
   </script>
 </body>
