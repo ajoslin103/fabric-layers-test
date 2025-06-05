@@ -13,7 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "eventemitter2": "^6.4.9",
-    "fabric-layers": "^1.0.1",
+    "fabric-layers": "file:../fabric-layers",
     "fabric-pure-browser": "^5.1.0"
   }
 }

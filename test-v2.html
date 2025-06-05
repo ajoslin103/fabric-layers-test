@@ -60,8 +60,8 @@
   <script src="./node_modules/fabric-pure-browser/dist/fabric.js"></script>
   <script src="./node_modules/eventemitter2/lib/eventemitter2.js"></script>
   
-  <!-- Load the library -->
-  <script src="./node_modules/fabric-layers/dist/index.umd.js"></script>
+  <!-- Load the library directly from local build -->
+  <script src="../fabric-layers/dist/index.umd.js"></script>
   
   <script>
     // Display status messages
@@ -113,19 +113,52 @@
       console.error('fabric-layers not loaded');
       addStatus('fabric-layers library not loaded', true);
     }
-    
-    // Initialize the grid manager
-    const gManager = new GridManager({
-      coordinatePlane: plane,
-      canvas: plane.gridCanvas,
-      });
-    setGridManager(gManager);
 
-    // Add event listeners
-    plane.on('object:added', handleObjectAdded);
-    plane.on('object:removed', handleObjectRemoved);
-    plane.on('object:modified', handleObjectModified);
-    
+    // Initialize the fabric canvas
+    const canvasContainer = document.getElementById('canvas-container');
+    const canvas = document.createElement('canvas');
+    canvas.width = 600;
+    canvas.height = 400;
+    canvasContainer.appendChild(canvas);
+
+    // Create the fabric canvas instance
+    const fabricCanvas = new fabric.Canvas(canvas);
+
+    // Initialize the grid using fabric-layers
+    const grid = new fabricLayers.Grid(canvas, {
+      width: 600,
+      height: 400,
+      color: '#cccccc',
+      opacity: 0.5,
+      axisColor: '#999999',
+      spacing: 20,
+      showLabels: true
+    });
+
+    // Render the grid
+    grid.render();
+
+    // Initialize the grid manager
+    const gridManager = new fabricLayers.GridManager({
+      grid: grid,
+      canvas: fabricCanvas  // GridManager needs the fabric canvas instance
+    });
+
+    // Add event listeners for object changes
+    fabricCanvas.on('object:added', (e) => {
+      console.log('Object added:', e.target);
+    });
+
+    fabricCanvas.on('object:removed', (e) => {
+      console.log('Object removed:', e.target);
+    });
+
+    fabricCanvas.on('object:modified', (e) => {
+      console.log('Object modified:', e.target);
+    });
+
+    // Add success status
+    addStatus('Canvas and grid system initialized successfully');
   </script>
 </body>
 </html>
