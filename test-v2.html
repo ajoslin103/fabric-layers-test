@@ -16,6 +16,7 @@
       height: 400px;
       border: 1px solid #ccc;
       margin: 20px 0;
+      position: relative;
     }
     .status {
       margin: 10px 0;
@@ -43,11 +44,14 @@
     .version-table th {
       background-color: #f2f2f2;
     }
+    canvas {
+      display: block;
+    }
   </style>
 </head>
 <body>
-  <h1>fabric-layer v2.0.0 with fabric-pure-browser 5.1.0 Test</h1>
-  <p>This page verifies that the fabric-layers library works with fabric-pure-browser 5.1.0.</p>
+  <h1>fabric-layers Test</h1>
+  <p>This page verifies that the fabric-layers library works</p>
   
   <div id="status-container"></div>
   <div id="canvas-container"></div>
@@ -99,50 +103,29 @@
     }
     
     // Check if fabric-layers is loaded
-    if (typeof FabricLayers !== 'undefined') {
+    if (typeof fabricLayers !== 'undefined') {
       // Display fabric-layers version
-      if (FabricLayers.version) {
-        addVersionRow('fabric-layers', FabricLayers.version, '✅ Loaded');
-        addStatus(`Successfully loaded fabric-layers v${FabricLayers.version}`);
-      } else {
-        addVersionRow('fabric-layers', '1.0.0 (from package.json)', '✅ Loaded, version from package.json');
-        addStatus('Successfully loaded fabric-layers, version from package.json');
-      }
-      
-      // Test CoordinatePlane and Layer functionality
-      try {
-        const container = document.getElementById('canvas-container');
-        
-        // Create a coordinate plane
-        const plane = new FabricLayers.CoordinatePlane(container, {
-          gridEnabled: true,
-          zoomEnabled: true,
-          selectEnabled: true
-        });
-        
-        console.log('CoordinatePlane created successfully:', plane);
-        addStatus('CoordinatePlane created successfully!');
-        
-        // Try to add a layer to test functionality
-        try {
-          const layer = new FabricLayers.Layer({
-            name: 'Test Layer',
-            coordinatePlane: plane
-          });
-          plane.addLayer(layer);
-          addStatus('Layer added successfully!');
-        } catch (layerError) {
-          console.error('Error adding layer:', layerError);
-          addStatus(`Error adding layer: ${layerError.message}`, true);
-        }
-      } catch (error) {
-        console.error('Error initializing fabric-layers:', error);
-        addStatus(`Error initializing fabric-layers: ${error.message}`, true);
+      if (fabricLayers.version) {
+        addVersionRow('fabric-layers', fabricLayers.version, '✅ Loaded');
+        addStatus(`Successfully loaded fabric-layers v${fabricLayers.version}`);
       }
     } else {
-      addVersionRow('fabric-layers', 'Unknown', '❌ Not loaded');
-      addStatus('Failed to load fabric-layers', true);
+      console.error('fabric-layers not loaded');
+      addStatus('fabric-layers library not loaded', true);
     }
+    
+    // Initialize the grid manager
+    const gManager = new GridManager({
+      coordinatePlane: plane,
+      canvas: plane.gridCanvas,
+      });
+    setGridManager(gManager);
+
+    // Add event listeners
+    plane.on('object:added', handleObjectAdded);
+    plane.on('object:removed', handleObjectRemoved);
+    plane.on('object:modified', handleObjectModified);
+    
   </script>
 </body>
 </html>
